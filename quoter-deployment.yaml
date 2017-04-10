@@ -1,0 +1,28 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: thequoter-canary
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: thequoter
+    spec:
+      containers:
+      - name: thequoter
+        image: pastjean/thequoter:v1
+        ports:
+        - name: http
+          containerPort: 8080
+        livenessProbe:
+          httpGet:
+            path: /
+            port: http
+        resources:
+          requests:
+            memory: "50mi"
+            cpu: "50m"
+          limits:
+            memory: "50mi"
+            cpi: "1"
